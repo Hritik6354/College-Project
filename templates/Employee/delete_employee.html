@@ -1,0 +1,25 @@
+{% extends "master.html" %}
+
+
+{% load static %}
+{% block title %}
+  Delete Employee
+{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/view_employee.css' %}">
+    <link rel="stylesheet" href="{% static 'css/view.css' %}">
+{% endblock %}
+
+{% block content %}
+{% include 'navbar.html' %}
+<div class="main">
+   <h2>confirm Delete</h2><br>
+   <p>Are you sure you want to delete the employee '{{ employee.user.get_full_name }}'?</p><br>
+   <form action="" method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn" style="width: 40%; border: none;">Yes, Delete</button>
+        <a href="{% url 'view_Employee' %}" style="text-decoration: none;" id="btn" class="btn">Cancle</a>
+   </form>
+</div>
+{% endblock %}

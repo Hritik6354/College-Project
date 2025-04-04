@@ -1,0 +1,47 @@
+{% extends "master.html" %}
+
+
+{% load static %}
+{% block title %}
+    View Departments
+{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/view.css' %}">
+    <link rel="stylesheet" href="{% static 'css/datatables.min.css' %}">
+    <style>
+        .table-container {
+            width: 150%; /* Adjust the width as needed */
+            margin: 25%;
+            padding: 20px; /* Optional: Add some padding */
+        }
+    </style>
+    {% comment %} <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}"> {% endcomment %}
+{% endblock %} 
+
+{% block content %}
+{% include 'navbar.html' %}
+<div class="main">
+    <div class="table-container">
+    <h2>View Department</h2>
+    <table class="table-sm-custom table-striped table-bordered" id="myTable" >
+        <thead>
+            <tr>
+                <th scope="col">sr No.</th>
+                <th scope="col">Department Name</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            {% for department in dep %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ department.dep_name }}</td>
+                
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,73 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static 'css/loginPage.css' %}" />
+    <title>Login Page</title>
+    <style>
+      .message-box {
+          padding: 10px;
+          margin-top: 10px;
+          border-radius: 5px;
+          width: 100%;
+          text-align: center;
+      }
+      .success-message {
+          color: green;
+          background-color: #e6ffe6;
+          border: 1px solid green;
+      }
+      .warning-message {
+          color: red;
+          background-color: #ffe6e6;
+          border: 1px solid red;
+      }
+
+      a{
+        color:white !important;
+        text-transform: uppercase;
+        font-weight: bold;
+        transition: background-color 0.3s ease-in-out;
+
+
+      }
+      </style>
+  
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="form-wrapper sign-in">
+        <form action="" method="post">
+          {% csrf_token %}
+          <h2>Login</h2>
+          <div class="input-group">
+            <input type="text" name="username" id="username" required />
+            <label for="username">Username</label>
+          </div>
+          <div class="input-group">
+            <input type="password" name="password" id="password" required />
+            <label for="password">Password</label>
+          </div>
+          <div class="remember">
+            <label for="remember">
+              <p><a href="{% url 'forgot_password' %}">Forgot your password ?</a></p>
+            </label>
+          </div>
+          <button type="submit">Login</button>
+          
+          {% if messages %}
+          <div class="message-container">
+              {% for message in messages %}
+                  <div class="message-box {% if message.tags == 'success' %}success-message{% else %}warning-message{% endif %}">
+                      {{ message }}
+                  </div>
+              {% endfor %}
+          </div>
+        {% endif %}
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

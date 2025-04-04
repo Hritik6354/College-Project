@@ -1,0 +1,139 @@
+{% extends "master.html" %}
+
+{% block title %}
+    Employee Dashboard
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .main1 {
+        margin-left: 280px;
+        margin-top: 80px;
+    }
+
+    .analyse {
+        margin-top: 20px;
+        display: grid;
+        grid-template-columns: repeat(2,1fr);
+        gap:1.6rem;
+    }
+
+    .analyse > div {
+        background-color: #f1f1f1;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        transition: all 0.3s ease;
+        cursor: pointer;
+    }
+
+    .analyse > div:hover {
+        box-shadow: none;
+    }
+
+    .status {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .percentage {
+        position: absolute;
+        right: 34px;
+    }
+
+    .chart-container {
+        margin-top: 20px;
+    }
+
+    .chart {
+        flex: 1;
+        min-width: 300px;
+        margin: 10px;
+    }
+
+    form {
+        margin-top: 40px;
+        margin-left: 80px;
+    }
+
+    select {
+        padding: 10px;
+        font-size: 16px;
+        border-radius: 4px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+    {% include 'navbar.html' %}
+    <div class="main1">
+        <h1>Employee Dashboard</h1>
+        <div class="analyse">
+            <div>
+                <div class="status">
+                    <div class="info">
+                        <h2>Your Attendance This Month</h2>
+                        <p><a href="{% url 'view_Attendance' %}">View Attendance</a></p>
+                    </div>
+                    <div class="percentage">
+                        <h1>{{ attendance_record|length }}</h1>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <div class="status">
+                    <div class="info">
+                        <h2>Total Leaves Taken</h2>
+                        <p><a href="{% url 'track_Leave' %}">Track Leave</a></p>
+                    </div>
+                    <div class="percentage">
+                        <h1>{{ total_leaves_taken }}</h1>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <div class="status">
+                    <div class="info">
+                        <h2>Pending Leave Requests</h2>
+                        <p><a href="{% url 'track_Leave' %}">View Pending Leaves</a></p>
+                    </div>
+                    <div class="percentage">
+                        <h1>{{ pending_leaves }}</h1>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <div class="status">
+                    <div class="info">
+                        <h2>Your Department</h2>
+                        <p>{{ department }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Option to update period for attendance stats -->
+        <form method="GET">
+            <label for="period">Choose a period: </label>
+            <select id="period" name="period">
+                <option value="daily">Daily</option>
+                <option value="weekly">Weekly</option>
+                <option value="monthly" selected>Monthly</option>
+                <option value="yearly">Yearly</option>
+            </select>
+            <button type="submit">Update</button>
+        </form>
+
+        <!-- Chart Containers -->
+        <div class="chart-container">
+            <!-- Attendance Chart -->
+            <div class="chart">
+                {{ attendance_chart_html|safe }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

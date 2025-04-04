@@ -1,0 +1,443 @@
+{% extends "master.html" %}
+
+{% load static %}
+{% block title %}
+    Dashboard
+{% endblock %}
+
+{% block extra_css %}
+<style>
+
+    .main1{
+        margin-left: 280px;
+        margin-top: 80px;
+    }
+
+    .analyse {
+        margin-top: 20px;
+        display: grid;
+        grid-template-columns: repeat(3,1fr);
+        gap:1.6rem;
+    }
+
+    .analyse > div {
+        background-color: #f1f1f1;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        transition: all 0.3s ease;
+        cursor: pointer; 
+    }
+
+    .analyse > div:hover{
+        box-shadow: none;
+    }
+
+    .status{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: relative;
+    }
+
+    .analyse > h2 {
+       margin-left: 0.6rem;
+       font-size: 1rem;
+    }
+
+    .analyse > div .progress {
+        position: relative;
+        width: 92px;
+        height: 92px;
+        border-radius: 50%;
+    } 
+
+    .main1 .analyse svg{
+        width: 7rem;
+        height: 7rem;
+    }
+
+    .main1 .analyse svg circle{
+        fill: none;
+        stroke-width: 10;
+        stroke-linecap: round;
+        transform: translate(5px , 5px);
+    }
+
+    .main1 .analyse .sales svg circle{
+        stroke: green;
+        stroke-dashoffset: -30%;
+        stroke-dasharray: 200;
+    }
+
+    .main1 .analyse .box-2 svg circle{
+        stroke: red;
+        stroke-dashoffset: -30%;
+        stroke-dasharray: 200;
+    }
+
+    .main1 .analyse .box-3 svg circle{
+        stroke: blue;
+        stroke-dashoffset: -30%;
+        stroke-dasharray: 200;
+    }
+
+    .main1 .analyse .box-4 svg circle{
+        stroke: yellow;
+        stroke-dashoffset: -30%;
+        stroke-dasharray: 200;
+    }
+
+    .main1 .analyse .box-5 svg circle{
+        stroke: rgb(129, 15, 187);
+        stroke-dashoffset: -30%;
+        stroke-dasharray: 200;
+    }
+
+    .main1 .analyse .box-6 svg circle{
+        stroke: rgb(148, 214, 14);
+        stroke-dashoffset: -30%;
+        stroke-dasharray: 200;
+    }
+
+    .percentage{
+        position: absolute;
+        /* top: -3px;
+        left: -1px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        width: 100%; */
+        right: 34px;
+    }
+
+    h1 {
+        text-align: center;
+    }
+
+    form {
+        margin-top: 40px;
+        margin-left: 80px;
+        /* text-align: center; */
+    }
+
+    label, select {
+        font-size: 16px;
+        padding: 5px;
+    }
+
+    #attendanceGraph {
+        /* text-align: center; */
+        /* width: 50%;
+        margin: 0; */
+    }
+
+    #leave{
+        height: 300px;
+    }
+
+    .chart-container {
+            display: flex;
+            flex-wrap: wrap; /* Adjust layout on smaller screens */
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-top: 20px;
+    }
+    .chart {
+        flex: 1 1 48%; /* Each chart takes 48% width, making it responsive */
+        margin: 10px;
+        min-width: 300px; /* Minimum width for smaller screens */
+    }
+
+    option {
+        text-align: center;
+        margin-top: 20px;
+    }
+
+    select {
+        padding: 10px;
+        font-size: 16px;
+        border: none;
+        border-radius: 4px;
+    }
+
+    .heading {
+        /* background-color: #4CAF50; */
+        color: blue; /* Text color */
+        font-size: 20px; /* Font size */
+        padding: 10px; /* Padding around the text */
+        border-radius: 5px; /* Rounded corners */
+        font-weight: bold; /* Bold text */
+        text-align: center; /* Center align text */
+        animation: marquee 10s linear infinite; /* Animation */
+    }
+
+    /* @keyframes marquee {
+        0% { transform: translateX(100%); }
+        100% { transform: translateX(-100%); }
+    } */
+
+    hr {
+        border: none; /* Remove default border */
+        height: 2px; /* Line height */
+        background-color: black; /* Line color */
+        margin: 20px 0; /* Margin above and below lines */
+    }
+
+</style>
+{% endblock %}
+
+{% block content %}
+
+    {% include 'navbar.html' %}
+    <div class="main1">
+        {% if is_hr %}
+        <h1>Welcome to the HRMS System {{ emp_id.user }}</h1>
+        {% else %}
+        <hr>
+        <div class="heading">
+        <h1>Welcome to the HRMS System {{ emp_id.user.first_name|add:" " }}{{  emp_id.user.last_name  }}</h1>
+        </div>
+        <hr>
+        {% endif %}
+        <div class="analyse">
+            <div class="sales">
+                <div class="employee">
+                    <div class="status">
+                        <div class="info">
+                            {% if is_hr %}
+                            <h2>Total Employee </h2>
+                            <p><a href="{% url 'view_Employee' %}">View Employee</a></p>
+                            {% else %}
+                            <h2>Attendance Current Month</h2>
+                            <p><a href="{% url 'view_Attendance' %}">View Attendance</a></p>
+                            {% endif %}
+                        </div>
+                        <div class="progress">
+                            <svg>
+                                <circle cx="38" cy="38" r="36"></circle>
+                            </svg>
+                        </div>
+                        <div class="percentage">
+                            {% if is_hr %}
+                            <h1>{{ employee_count }}</h1>
+                            {% else %}
+                            <h1>{{ attendance_current_month }}</h1>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="box-2">
+                <div class="employee">
+                    <div class="status">
+                        <div class="info">
+                            {% if is_hr %}
+                            <h2>pending Leaves</h2>
+                            <p><a href="{% url 'track_Leave' %}">Track Leave</a></p>
+                            {% else %}
+                            <h2>Total Leaves Taken</h2>
+                            <p><a href="{% url 'track_Leave' %}">Track Leave</a></p>
+                            {% endif %}
+                        </div>
+                        <div class="progress">
+                            <svg>
+                                <circle cx="38" cy="38" r="36"></circle>
+                            </svg>
+                        </div>
+                        <div class="percentage">
+                            {% if is_hr %}
+                            <h1> {{ total_pending_leaves }}</h1>
+                            {% else %}
+                            <h1>{{ pending_leaves }}</h1>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="box-3">
+                <div class="employee">
+                    <div class="status">
+                        <div class="info">
+                            {% if is_hr %}
+                            <h2> present Employee</h2>
+                            <p><a href="{% url 'view_Attendance' %}">Attendance Statatus</a></p>
+                            {% else %}
+                            <h2>Pending Leave Requests</h2>
+                            <p><a href="{% url 'track_Leave' %}">View Pending Leaves</a></p>                   
+                            {% endif %}
+                        </div>
+                        <div class="progress">
+                            <svg>
+                                <circle cx="38" cy="38" r="36"></circle>
+                            </svg>
+                        </div>
+                        <div class="percentage">
+                            {% if is_hr %}
+                            <h1>{{ present_employees }}</h1>
+                            {% else %}
+                            <h1>{{ pending_leaves }}</h1>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="box-4">
+                <div class="employee">
+                    <div class="status">
+                        <div class="info">
+                            {% if is_hr %}
+                            <h2>Total Departments</h2>
+                            <p><a href="{% url 'view_Department' %}">view Departments</a></p>
+                            {% else %}
+                            <h2>Approved Leaves</h2>
+                            <p><a href="{% url 'track_Leave' %}">View Approved Leaves</a></p>                   
+                            {% endif %}
+                        </div>
+                        <div class="progress">
+                            <svg>
+                                <circle cx="38" cy="38" r="36"></circle>
+                            </svg>
+                        </div>
+                        <div class="percentage">
+                            {% if is_hr %}
+                            <h1>{{ total_department }}</h1>
+                            {% else %}
+                            <h1>{{ approved_leaves }}</h1>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="box-5">
+                <div class="employee">
+                    <div class="status">
+                        <div class="info">
+                            {% if is_hr %}
+                            <h2> Attendance Pending Requests </h2>
+                            <p><a href="{% url 'approve_Attendance' %}">Approve Attendance</a></p>
+                            {% else %}
+                            <h2>Current Attendance status</h2>
+                            {% endif %}
+                        </div>
+                        <div class="progress">
+                            <svg>
+                                <circle cx="38" cy="38" r="36"></circle>
+                            </svg>
+                        </div>
+                        <div class="percentage">
+                            {% if is_hr %}
+                            <h1>{{ total_pending_requests }}</h1>
+                            {% else %}
+                            <h1>{{ present_status }}</h1>
+                            {% endif %}
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="box-6">
+                <div class="employee">
+                    <div class="status">
+                        <div class="info">
+                            {% if is_hr %}
+                            <h2>Today’s Absent Employees</h2>
+                            <p><a href="{% url 'view_Attendance' %}">Attendance Statatus</a></p>
+                            {% else %}
+                            <h2>Pending Attendance Request</h2>
+                            {% endif %}
+                        </div>
+                        <div class="progress">
+                            <svg>
+                                <circle cx="38" cy="38" r="36"></circle>
+                            </svg>
+                        </div>
+                        <div class="percentage">
+                            {% if is_hr %}
+                            <h1>{{ absent_employees }}</h1>
+                            {% else %}
+                            <h1>{{ pending_attendance_requests }}</h1>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        {% if is_hr %}
+
+        <form method="GET">
+            <label for="period">Choose a period: </label>
+            <select id="period" name="period">
+                <option value="daily" {% if period == 'daily' %}selected{% endif %}>Daily</option>
+                <option value="weekly" {% if period == 'weekly' %}selected{% endif %}>Weekly</option>
+                <option value="monthly" {% if period == 'monthly' %}selected{% endif %}>Monthly</option>
+                <option value="yearly" {% if period == 'yearly' %}selected{% endif %}>Yearly</option>
+            </select>
+            <button type="submit">Update</button>
+        </form>
+
+
+    
+        <!-- Chart Container -->
+        <div class="chart-container">
+
+          
+            <!-- Leave Pie Chart -->
+            <div class="chart" id="leave">
+                {{ leave_chart_html|safe }}
+            </div>
+           
+            <!-- Attendance Chart -->
+            <div class="chart">
+                {{ attendance_chart_html|safe }}
+            </div>
+        </div>
+
+        {% endif %}
+
+        
+
+
+    
+    </div>
+
+{% endblock %}
+
+{% block extra_js %}
+    <!-- Additional scripts can be added here by child templates -->
+
+    <script>
+        // Check if the user has just logged in
+        window.onload = function() {
+            // Check for the sessionStorage flag
+            if (sessionStorage.getItem('loggedIn') === 'true') {
+                // Clear the flag
+                sessionStorage.removeItem('loggedIn');
+                // Reload the page to display the pie chart and other data
+                location.reload();
+            }
+        };
+        
+    </script>
+    
+        // Set the login flag if it exists in the context
+        {% if login_flag %}
+            sessionStorage.setItem('loggedIn', 'true');
+        {% endif %}
+  
+    
+
+
+{% endblock %}
+
+
+
+

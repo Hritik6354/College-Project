@@ -1,0 +1,149 @@
+{% extends "master.html" %}
+
+
+{% load static %}
+{% block title %}
+   Leave Recorsd
+{% endblock %}
+
+{% block extra_css %}
+    {% comment %} <link rel="stylesheet" href="{% static 'css/attendance_request.css' %}"> {% endcomment %}
+    <style>
+        /* General page styling */
+        .table-container {
+            width: 200%; /* Adjust the width as needed */
+            margin-right: 15%;
+            padding: 20px; /* Optional: Add some padding */
+        }
+
+        .filter-form {
+            display: flex;
+            flex-wrap: nowrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px; /* Space between form elements */
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            flex: 1;
+        }
+
+        .form-label {
+            font-weight: bold;
+            color: black;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-input,
+        .form-select {
+            background-color: #333;
+            border: 1px solid #555;
+            color: #fff;
+            border-radius: 5px;
+            padding: 10px;
+            width: 100%;
+        }
+
+        .form-input:focus,
+        .form-select:focus {
+            border-color: #0ef;
+            outline: none;
+        }
+
+        button {
+            background-color: blue;
+            border: none;
+            padding: 10px ;
+            border-radius: 5px;
+            cursor: pointer;
+            {% comment %} transition: background-color 0.3s ease; {% endcomment %}
+            margin-top: 30px;
+            {% comment %} margin-right: 120px; {% endcomment %}
+        }
+
+        button:hover {
+            background-color:  #0ef;
+            color: white;
+            padding: 10px;
+        }
+    
+    </style>
+    <link rel="stylesheet" href="{% static 'css/view.css' %}">
+    <link rel="stylesheet" href="{% static 'css/datatables.min.css' %}">
+   
+{% endblock %}
+
+{% block content %}
+{% include 'navbar.html' %}
+<div class="main">
+    <div class="table-container">
+            <h2 >All Leaves</h2>
+            <form method="get" action="" class="filter-form">
+                <div class="form-group">
+                    <label for="start_date" class="form-label">Select Employee:</label>
+                    <select id="employee" name="employee" class="form-select">
+                        <option value="">All Employees</option>
+                        {% for employee in all_emp %}
+                        <option value="{{ employee }}">{{ employee }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="status" class="form-label">Select Status:</label>
+                    <select id="status" name="status" class="form-select">
+                        <option value="">All Statuses</option>
+                        <option value="pending">Pending</option>
+                        <option value="approved">Approved</option>
+                        <option value="rejected">Rejected</option>
+                    </select>
+                </div>
+               
+                <div class="form-actions">
+                    <button type="submit" class="">Apply Filter</button>
+                    {% comment %} <a href="{% if start_date and end_date %}{% url 'download_attendance_csv' start_date=start_date end_date=end_date %}{% endif %}" class="btn btn-download">Download CSV</a> {% endcomment %}
+                </div>
+        </form>
+        <table class="table-sm-custom table-striped table-bordered" id="myTable" >
+            <thead>
+                <tr>
+                    <th>Employee</th>
+                    <th>Leave Type</th>
+                    <th>From</th>
+                    <th>To</th>
+                    <th>Number of Days</th>
+                    <th>Status</th>
+                    <th>Description</th>
+                    <th>Action</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if leave_records %}
+                    {% for leave in leave_records %}
+                    <tr>
+                        <td>{{ leave.emp_id.user.username }}</td>
+                        <td>{{ leave.leavetype_id }}</td>
+                        <td>{{ leave.fro }}</td>
+                        <td>{{ leave.to }}</td>
+                        <td>{{ leave.num_of_days }}</td>
+                        <td>{{ leave.status }}</td>
+                        <td>{{ leave.description }}</td>
+                        {% if leave.status ==  'pending' %} 
+                        <td><a class="btn" href="{% url 'approve_Reject_leave' id=leave.id action='accept' %}">Approve</a></td>
+                        <td> <a class="btn" id="btn"   href="{% url 'approve_Reject_leave' id=leave.id action='reject' %}">Reject</a></td> 
+                          
+                        {% endif %}
+                        
+                        <!-- Add more columns as needed -->
+                    </tr>
+                    {% endfor %}
+                {% endif %}
+            </tbody>
+          
+        </table>
+    </div>
+</div>
+{% endblock %}

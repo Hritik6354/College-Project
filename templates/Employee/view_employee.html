@@ -1,0 +1,129 @@
+{% extends "master.html" %}
+
+
+{% load static %}
+{% block title %}
+    Add Employee
+{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/view.css' %}">
+    <!-- <link rel="stylesheet" href="{% static 'css/datatables.min.css' %}"> -->
+   <!-- <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}"> -->
+    <style>
+       h2{
+            margin-left: 350px;
+       }
+
+       .filter-form {
+            display: flex;
+            flex-wrap: nowrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px; /* Space between form elements */
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            flex: 1;
+        }
+
+        .form-label {
+            font-weight: bold;
+            color: #bbb;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-input,
+        .form-select {
+            background-color: #333;
+            border: 1px solid #555;
+            color: #fff;
+            border-radius: 5px;
+            padding: 10px;
+            width: 100%;
+        }
+
+        .form-input:focus,
+        .form-select:focus {
+            border-color: #0ef;
+            outline: none;
+        }
+
+        button {
+            background-color: blue;
+            border: none;
+            padding: 10px ;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #button:hover {
+            background-color:  #0ef;
+            color: white;
+            padding: 10px;
+        }
+
+        #button{
+            margin-top: 30px;
+            background-color: blue;
+        }
+    
+    </style>
+{% endblock %} 
+
+{% block content %}
+{% include 'navbar.html' %}
+<div class="main">
+    <h2>All Employees</h2>
+
+    <div class="form-container">
+        <form id="add-dep-form" method="post" class="filter-form">
+          {% csrf_token %}
+            <div class="form-group">
+                <label for="dep_filter" class="form-label">Select Department:</label>
+                <select id="dep_filter" name="dep_filter" class="form-select">
+                    <option value="">All Departments</option>
+                    {% for x in departments %}
+                    <option value="{{ x }}">{{ x }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+          <button  class="btn" id="button" >
+            <a>All Employees</a>
+          </button>
+          <button  id="button"  class="btn">Apply Filter</button>
+        </form>
+      </div>
+
+    <table id="myTable" >
+        <thead>
+            <tr>
+                <th scope="col">sr No.</th>
+                <th scope="col">Username</th>
+                <th scope="col">profile</th>
+                <th scope="col">Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Contact No</th>
+                <th scope="col">Update</th>
+                <th scope="col">Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for emp in employees %}
+            <tr>
+                <td>{{ forloop.counter }}</td>
+                <td>{{ emp.user }}</td>
+                <td><img src="/media/{{ emp.profile }}" class="img"  alt="Profile Image"></td>
+                <td>{{ emp.user.first_name|add:" "|add:emp.user.last_name }}</td>
+                <td>{{ emp.email }}</td>
+                <td>{{ emp.mobile_number }}</td>
+                <td><a class="btn" id="btn" href="{% url 'update_Employee' emp.id %}">Update</a></td>
+                <td><a class="btn" href="{% url 'delete_Employee' emp.id %}">Delete</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

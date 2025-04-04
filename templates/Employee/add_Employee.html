@@ -1,0 +1,181 @@
+{% extends "master.html" %}
+
+
+{% load static %}
+{% block title %}
+    Add Employee
+{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/add_employees.css' %}">
+    <style>
+        .message-box {
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+            width: 100%;
+            text-align: center;
+        }
+        .success-message {
+            color: green;
+            background-color: #e6ffe6;
+            border: 1px solid green;
+        }
+        .warning-message {
+            color: red;
+            background-color: #ffe6e6;
+            border: 1px solid red;
+        }
+
+        .input-group {
+            display: flex;
+            align-items: center;  /* Aligns label and radio buttons vertically in the center */
+            margin: 20px 0;
+            width: 100%;
+        }
+        
+        .radio-groups {
+            display: flex;
+            align-items: center;  /* Aligns the radio buttons and their labels */
+            margin-left: 15px;    /* Space between the "Gender" label and the radio buttons */
+        }
+        
+        .radio-groups input[type="radio"] {
+            transform: scale(0.9); /* Adjust the scale for smaller radio buttons */
+            margin-right: 5px;     /* Space between radio button and the label */
+            background-color: gray;
+            color: grey;
+        }
+
+        #gender-female{
+            margin-left: 70px;
+        }
+      
+        radio-groups label {
+            margin-right: 50px;    #Space between each radio button label
+        } 
+        
+        
+    
+    </style>
+{% endblock %}
+
+
+{% block content %}
+{% include 'navbar.html' %}
+{{ form.as_p }}
+<div class="main">
+    <div class="wrapper">
+        <div class="form-wrapper sign-in">
+            <form action="" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                
+                <h2>Add Employee</h2>
+                <div class="input-group">
+                    <label for="user">Employee ID <span>*</span></label>
+                    <input type="text" name="user" id="user" required>
+                </div>
+                <div class="input-group">
+                    <label for="fname">First Name <span>*</span></label>
+                    <input type="text" name="fname" id="fname" required>
+                </div>
+                <div class="input-group">
+                    <label for="lname">Last Name <span>*</span></label>
+                    <input type="text" name="lname" id="lname" required>               
+                </div>
+                <div class="input-group">
+                    <label for="email">Email <span>*</span></label> 
+                    <input type="email" name="email" id="email" required>            
+                </div>
+                <div class="input-group">
+                    <label for="mob">Mobile Number</label>
+                    <input type="tel" name="mob" id="mob" required> 
+                </div>
+                <div class="input-group">
+                    <label for="gender">Gender</label>
+                    <div class="radio-groups">
+                        <input type="radio" name="gender" value="Male" id="gender-male" required>
+                        <p style="color:whitesmoke">Male</p>
+                        <input type="radio" name="gender" value="Female" id="gender-female" required>
+                        <p style="color:whitesmoke">Female</p>
+                    </div>
+                </div>
+                
+                <div class="input-group">
+                    <label for="address">Address</label>
+                    <textarea class="form-control" id="address" name="address" rows="4"  placeholder="Enter your address" ></textarea>
+                   
+                </div>
+                <div class="input-group">
+                    <label for="dob">Date of Birth<span>*</span></label>
+                    <input type="date" name="dob" id="dob" required>
+                </div>
+                <div class="input-group">
+                    <label for="date_of_join">Date of Joining</label>
+                    <input type="date" name="date_of_join" id="date_of_join" required>
+                    
+                </div>
+                <div class="input-group">
+                    <label for="state">State</label>
+                    <select name="state" id="state" >
+                        <option value="">--select state--</option>
+                        {% for x in states %}
+                        <option value="{{ x }}">{{ x }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="city">city</label>
+                    <select name="city" id="city" >
+                        <option value="">--select city--</option>
+                        {% for x in cities %}
+                        <option value="{{ x }}">{{ x }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="department">Department</label>
+                    <select name="department" id="department" >
+                        <option value="">--select Department--</option>
+                        {% for x in departments %}
+                        <option value="{{ x }}">{{ x }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="designation">Designation</label>
+                    <select name="designation" id="designation" >
+                        <option value="">--select Designation --</option>
+                        {% for x in designations %}
+                        <option value="{{ x }}">{{ x }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="profile">Profile</label>
+                    <input type="file" name="profile" id="profile"accept="images/*" required>      
+                </div>
+                <div class="input-group">
+                    <label for="password">Password <span>*</span></label>
+                    <input type="password" name="password" id="password" required>             
+                </div>
+                <div class="input-group">
+                    <label for="c_password">Confirm Password <span>*</span></label>
+                    <input type="password" name="c_password" id="c_password" required>
+                </div>
+                <button type="submit">Submit</button>
+                {% comment %} messages.success(request, f'Employee {first_name} {last_name} has been added successfully!') {% endcomment %}
+                {% if messages %}
+                <div class="message-container">
+                    {% for message in messages %}
+                        <div class="message-box {% if message.tags == 'success' %}success-message{% else %}warning-message{% endif %}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

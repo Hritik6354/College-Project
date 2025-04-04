@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'> -->
+    <style>
+        .navbar{ 
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 20px;
+        background-color: #11101d;
+        position: fixed;
+        top: 0;
+        width: 85%;
+        z-index: 1000;
+        margin-left: 15%;
+    }
+
+    </style>
+    <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    
+    <div class="sidebar">
+        <div class="logo-details">
+            <img class="so" src="{% static 'images/icons8-human-resources-50.svg' %}" alt="My SVG Image" width="10" height="10">
+            <span class="logo-name">HRMS System</span>
+        </div>
+           
+            
+        <ul class="nav-links">
+            <li>
+                <a href="{% url 'index' %}"><img  class="so" src="{% static 'images/bxs-dashboard.svg' %}" alt="My SVG Image" width="20" height="20"><span class="link_name">Dashboard</span></a>
+                <ul class="sub-menu">
+                    <li><a class="link_name" href="#">Dashboard</a></li>
+                </ul>
+            </li>
+            <li>
+                <div class="icon_link">
+                    <a href="#"><img class="so arrow" src="{% static 'images/bxs-user.svg' %}" alt="My SVG Image" width="20" height="20"><span class="link_name">Employee</span></a><img class="so" src="{% static 'images/bx-chevron-down.svg' %}" alt="My SVG Image" width="20" height="20">
+                </div>
+                <ul class="sub-menu">
+                    <li><a class="link_name" href="#">Employee</a></li>
+                    <li><a  href="{% url 'my_Profile' %}">My Profile</a></li>
+                {% if is_hr %}
+                    <li><a href="{% url 'add_Employee' %}">Add Employee</a></li>
+                    <li><a href="{% url 'view_Employee' %}">View Employee</a></li>
+                {% endif %}
+                </ul>
+                
+            </li>
+            <li>
+                <div class="icon_link">
+                    <a href="#"><img class="so arrow" src="{% static 'images/bxs-buildings.svg' %}" alt="My SVG Image" width="20" height="20"><span class="link_name">Department</span></a><img class="so" src="{% static 'images/bx-chevron-down.svg' %}" alt="My SVG Image" width="20" height="20">
+                </div>
+                <ul class="sub-menu">
+                    <li><a class="link_name" href="#">Department</a></li>
+                {% if is_hr %}
+                    <li><a href="{% url 'add_Departmet' %}">Add Department</a></li>
+                {% endif %}
+                    <li><a href="{% url 'view_Department' %}">View Department</a></li>
+                </ul>
+            </li>
+            <li>
+                <div class="icon_link">
+                    <a href="#"><img class="so arrow" src="{% static 'images/bxs-calendar-edit.svg' %}" alt="My SVG Image" width="20" height="20"><span class="link_name">Attendance</span></a><img class="so" src="{% static 'images/bx-chevron-down.svg' %}" alt="My SVG Image" width="20" height="20">
+                </div>
+                <ul class="sub-menu">
+                    <li><a class="link_name" href="#">Attendance</a></li>
+                    <li><a href="{% url 'fill_Attendance' %}">Fill Attendance</a></li>
+                    <li><a href="{% url 'attendace_Request' %}">Attendance Request</a></li>
+                {% if is_hr %}
+                    <li><a href="{% url 'approve_Attendance' %}">Approve Attendance</a></li>
+                {% endif %}
+                    <li><a href="{% url 'show_Graph' %}">Show Attendance Graph</a></li>
+                    <li><a href="{% url 'view_Attendance' %}">View Attendance</a></li>
+                </ul>
+            </li>
+            <li>
+                <div class="icon_link"><a href="#"><img class="so arrow" src="{% static 'images/bx-run.svg' %}" alt="My SVG Image" width="20" height="20"><span class="link_name">Leave</span></a><img class="so" src="{% static 'images/bx-chevron-down.svg' %}" alt="My SVG Image" width="20" height="20">
+                </div>
+                <ul class="sub-menu">
+                    <li><a class="link_name" href="#">Leave</a></li>
+                    <li><a  href="{% url 'leave_Application' %}">Leave Application</a></li>
+                {% if is_hr %}
+                    <li><a href="{% url 'leave_Approve' %}">Leave Approve</a></li>
+                {% endif %}
+                    <li><a href="{% url 'track_Leave' %}">Track Leave</a></li>
+                </ul>
+            </li>
+
+            <li>
+                <a href="{% url 'change_Password' %}"><img class="so" src="{% static 'images/bxs-key.svg' %}" alt="My SVG Image" width="20" height="20"><span class="link_name">Change Password</span></a>
+                <ul class="sub-menu">
+                    <li><a class="link_name" href="#">Change Password</a></li>
+                </ul>
+            </li>
+
+    
+            <li>
+                <div class="icon_link"><a href="#"><img class="so arrow" src="{% static 'images/bxs-cog.svg' %}" alt="My SVG Image" width="20" height="20"><span class="link_name">Setting</span></a><img class="so" src="{% static 'images/bx-chevron-down.svg' %}" alt="My SVG Image" width="20" height="20">
+                </div>
+                <ul class="sub-menu">
+                    <li><a class="link_name" href="#">Setting</a></li>
+                    <li><a href="{% url 'ask_Security_Questions' %}">Security Question</a></li>
+                </ul>
+            </li>
+
+            <li>
+            <div class="profile_details">
+                <div class="profile_content">
+                   <p><img src="/media/{{ emp_id.profile }}" alt="profile"></p>
+                </div>
+              
+                <div class="name_job">
+                    <div class="profile_name">parth doshi</div>
+                    <div class="job">HR</div>
+                </div>
+                <a href="{% url 'Logout' %}"><img class="so" src="{% static 'images/bx-log-out (1).svg' %}" alt="My SVG Image" width="10" height="10"></a>
+                  <li>
+                    
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <div>
+
+    <nav class="navbar">
+        <div class="navbar-brand">
+            {% comment %} <a href="#">MyProject</a> {% endcomment %}
+        </div>
+       
+        <!-- <div class="logo-details">
+            <img class="so" src="{% static 'images/icons8-human-resources-50.svg' %}" alt="My SVG Image" width="10" height="10">
+            <span class="logo-name">    HRMS System</span>
+        </div> -->
+    
+        <ul class="navbar-nav">
+            <!-- <li class="nav-item"><a href="#">Home</a></li> -->
+            <li class="nav-item"><a href="{% url 'about_us' %}">About Us</a></li>
+            <li class="nav-item"><a href="{% url 'contect_us' %}">Contact Us</a></li>
+            <li class="nav-item"><a class="btnlogout" href="{% url 'Logout' %}">Logout</a></li>
+        </ul>
+        <div class="navbar-toggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+    
+</div>
+
+<div class="main">
+
+</div>
+
+    <script src="{% static 'js/index.js' %}"> </script>
+    <script src="{% static 'js/jquery-3.7.1.min.js' %}"></script>
+    <script src="{% static 'js/datatables.min.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/message.js' %}"></script>
+    <script>
+        $(document).ready( function () {
+            $('#myTable').DataTable();
+     
+        } );
+    </script>
+    <script>
+        // JavaScript to update the input field when a new image is selected
+        function updateFileName() {
+            var fileInput = document.getElementById('profile');
+            var fileName = fileInput.files[0] ? fileInput.files[0].name : 'No image uploaded';
+            document.getElementById('profile_name').value = fileName;
+        }
+    </script>
+    
+</body> 
+</html>

@@ -1,0 +1,116 @@
+{% extends "master.html" %}
+
+
+{% load static %}
+{% block title %}
+    Update Employee
+{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/add_employees.css' %}">
+    
+{% endblock %}
+
+
+{% block content %}
+{% include 'navbar.html' %}
+{{ form.as_p }}
+<div class="main">
+    <div class="wrapper">
+        <div class="form-wrapper sign-in">
+            <form action="" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <h2>Update Employee</h2>
+                <div class="input-group">
+                    <label for="user">Employee ID <span>*</span></label>
+                    <input type="text" name="user" id="user" value="{{ employee.user }}" required>
+                </div>
+                <div class="input-group">
+                    <label for="fname">First Name <span>*</span></label>
+                    <input type="text" name="fname" id="fname" value="{{ employee.user.first_name }}" required>
+                </div>
+                <div class="input-group">
+                    <label for="lname">Last Name <span>*</span></label>
+                    <input type="text" name="lname" id="lname" value="{{ employee.user.last_name }}" required>               
+                </div>
+                <div class="input-group">
+                    <label for="email">Email <span>*</span></label> 
+                    <input type="email" name="email" id="email" value="{{ employee.email }}" required>            
+                </div>
+                <div class="input-group">
+                    <label for="mob">Mobile Number</label>
+                    <input type="tel" name="mob" id="mob" value="{{ employee.mobile_number }}" required> 
+                </div>
+                <div class="input-group">
+                    <label for="address">Address</label>
+                    <textarea class="form-control" id="address" name="address"  rows="4" >{{ employee.emp_address }}</textarea>
+                   
+                </div>
+                {% comment %} <div class="input-group">
+                    <label for="dob">Date of Birth <span>*</span></label>
+                    <input type="date" name="dob" id="dob" value="{{ employee.dob }}" readonly required>
+                </div> {% endcomment %}
+              
+                <div class="input-group">
+                    <label for="state">State</label>
+                    <select name="state" id="state" >
+                        <option value="{{ employee.state_id }}">{{ employee.state_id }}</option>
+                        {% for x in states %}
+                        <option value="{{ x }}">{{ x }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="city">city</label>
+                    <select name="city" id="city" >
+                        <option value="{{ employee.city_id }}">{{ employee.city_id }}</option>
+                        {% for x in cities %}
+                        <option value="{{ x }}">{{ x }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <div class="input-group">
+                    <label for="department">Department</label>
+                    <select name="department" id="department" >
+                        <option value="{{ employee.dep_id }}">{{ employee.dep_id }}</option>
+                        {% for x in deps %}
+                        <option value="{{ x }}">{{ x }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label for="designation">Designation</label>
+                    <select name="designation" id="designation" >
+                        <option value="{{ employee.des_id }}">{{ employee.des_id }}</option>
+                        {% for x in designation %}
+                        <option value="{{ x }}">{{ x }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                {% comment %} <div class="input-group">
+                    <label for="profile">Profile Image</label>
+                    {% if employee.profile %}
+                        <img src="{{ employee.profile.url }}" alt="Profile Image" style="max-width: 150px; max-height: 150px;">
+                        <p>Current Image: {{ employee.profile.name }}</p>
+                    {% endif %}
+                    <input type="file" name="profile" id="profile" accept="image/*">
+                </div> {% endcomment %}
+
+                  
+                <button type="submit">Submit</button>
+                messages.success(request, f'Employee {first_name} {last_name} has been added successfully!')
+                {% if messages %}
+                    <div>
+                        {% for message in messages %}
+                            <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

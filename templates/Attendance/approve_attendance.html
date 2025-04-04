@@ -1,0 +1,55 @@
+{% extends "master.html" %}
+
+
+{% load static %}
+{% block title %}
+   Approve Attendance
+{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/view.css' %}">
+    <link rel="stylesheet" href="{% static 'css/datatables.min.css' %}">
+    {% comment %} <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}"> {% endcomment %}
+{% endblock %} 
+
+{% block content %}
+{% include 'navbar.html' %}
+<div class="main">
+    <h2>Attendance Requests</h2>
+    <table class="table-sm-custom table-striped table-bordered" id="myTable" >
+        <thead>
+            <tr>
+                <th scope="col">Employee</th>
+                <th scope="col">Date</th>
+                <th scope="col">In Time</th>
+                <th scope="col">Out Time</th>
+                <th scope="col">Request Type</th>
+                <th scope="col">Status</th>
+                <th scope="col">Reason</th>
+                <th scope="col">Approve</th>
+                <th scope="col">Reject</th>
+            </tr>
+        </thead>
+        <tbody>
+          {% for record in attendance_records %}
+          <tr>
+              <td>{{ record.emp_id.user.first_name }} {{ record.emp_id.user.last_name }}</td>
+              <td>{{ record.att_date }}</td>
+              <td>{{ record.in_time }}</td>
+              <td>{{ record.out_time }}</td>
+              <td>{{ record.request_type }}</td>
+              <td>{{ record.status }}</td>
+              <td>{{ record.note }}</td>
+              <td>
+                  <a class="btn" id="btn" href="{% url 'accept_Reject_Attendance' record.id 'approve' %}">Approve</a>
+              </td>
+              <td>
+                  <a class="btn"    href="{% url 'accept_Reject_Attendance' record.id 'reject' %}">Reject</a>
+              </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      
+    </table>
+</div>
+{% endblock %}

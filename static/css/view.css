@@ -1,0 +1,91 @@
+body{
+    margin-right: 38%;
+    background-color: white;
+
+}
+
+
+.main{
+    margin-top: 100px;
+    height:0;
+    
+}
+
+.btn{
+    background-color: red;
+    border-radius: 4px;
+    color: white;
+    padding: 7px;
+    text-decoration: none;
+}
+
+#btn{
+    background-color: green;
+    text-decoration: none;
+}
+
+.table-sm-custom a{
+    text-decoration: none;
+}
+
+/* Decrease table size */
+.table-sm-custom {
+    font-size: 14px; /* Smaller font size */
+    margin-right: 80px;
+}
+
+.table-sm-custom th, .table-sm-custom td {
+    padding: 4px 8px; /* Reduce padding inside cells */
+}
+
+.table-sm-custom th {
+    font-weight: bold; /* Keep header bold if needed */
+    background-color: rgba(0, 0, 255, 0.792);
+    border-radius: 2px;
+}
+
+.table-sm-custom td {
+    vertical-align: middle; /* Align text vertically in the middle */
+}
+
+.table-sm-custom {
+    border-spacing: 0px; /* Remove spacing between cells */
+}
+
+
+td,th{
+            
+    padding: 10px;
+   
+}
+
+th{
+    background-color: blue;
+    color: white;
+}
+
+h2{
+    text-align: center;
+    left: 800px;
+    margin-bottom: 30px;
+    border-radius: 5px;
+    padding: 8px;
+}
+
+table,td{
+    border: 1px solid black ;
+    margin-top: 20px;
+    width: 80%;
+    align-items: center;
+    justify-content: center;
+}
+
+.img{
+    border-radius: 50%;
+    width: 70px;
+    height: 70px;
+
+}
+
+
+

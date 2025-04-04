@@ -1,0 +1,125 @@
+
+{% extends "master.html" %}
+
+
+{% load static %}
+{% block title %}
+   Security Questions
+{% endblock %}
+
+{% block extra_css %}
+    <!-- <link rel="stylesheet" href="{% static 'css/attendance_request.css' %}"> -->
+    <link rel="stylesheet" href="{% static 'css/about_us.css' %}">
+    <style>
+        .main1{
+            margin-top: 80px;
+            margin-left: 16%;
+        }
+
+        .jumbotron {
+            background-color: #f8f9fa;
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        .jumbotron h1 {
+            font-size: 2.5rem;
+        }
+
+        .about-container {
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .about-container h2 {
+            margin: 1rem 0;
+            font-size: 2rem;
+        }
+
+        .footer {
+            background-color: #343a40;
+            color: white;
+            text-align: center;
+            padding: 1rem 0;
+        }
+
+        .footer a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .social-links {
+            margin-top: 0.5rem;
+        }
+
+        .social-links a {
+            color: white;
+            margin: 0 0.5rem;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+{% include 'navbar.html' %}
+    <div class="main1">
+    
+        <!-- Hero Section -->
+        <section class="jumbotron">
+            <div class="container">
+                <h1>About Us</h1>
+                <p>Learn more about Human Resource Management System and our mission.</p>
+            </div>
+        </section>
+    
+        <!-- About Section -->
+        <section class="about-container">
+            <h2>Who We Are</h2>
+            <p>
+                At SkillServ, we are dedicated to connecting you with reliable and
+                professional service personnel, including electricians, plumbers,
+                repairmen, and more. Our mission is to provide exceptional service to
+                our clients while ensuring their needs are met with the highest
+                standards of quality.
+            </p>
+            <p>
+                With a team of skilled professionals, we aim to make your life easier by
+                providing quick and efficient solutions for all your service needs.
+                Whether you need a quick repair or a complete installation, SkillServ
+                has got you covered.
+            </p>
+    
+            <h2>Our Vision</h2>
+            <p>
+                Our vision is to become the leading platform for service provision,
+                recognized for our reliability, professionalism, and commitment to
+                customer satisfaction. We strive to build long-term relationships with
+                our clients and service providers alike.
+            </p>
+    
+            <h2>Our Values</h2>
+            <p>
+                Integrity, professionalism, and excellence are at the core of everything
+                we do at SkillServ. We believe in providing transparent pricing, skilled
+                personnel, and outstanding service to our customers.
+            </p>
+        </section>
+    
+        <!-- Footer Section -->
+      
+        
+        <div class="footer">
+            <p>&copy; 2024 HRMS System. All rights reserved.</p>
+            <p>
+                Contact us:
+                <a href="doshi2565@gmail.com.com">doshi2565@gmail.com</a>
+            </p>
+            <div class="social-links">
+                <a href="#">Facebook</a> |
+                <a href="#">Gmail</a> |
+                <a href="#">Instagram</a>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

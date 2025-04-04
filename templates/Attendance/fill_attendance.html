@@ -1,0 +1,107 @@
+{% extends "master.html" %}
+
+
+{% load static %}
+{% block title %}
+   Fill Attendance
+{% endblock %}
+
+{% block extra_css %}
+    {% comment %} <link rel="stylesheet" href="{% static 'css/view_employee.css' %}"> {% endcomment %}
+    <style>
+        .attendance-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f9f9f9;
+            margin-left: 22%;
+        }
+        
+        .button-container {
+            margin-top: 20px;
+        }
+        
+        .btn {
+            padding: 15px 30px;
+            margin: 10px;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        .check-in {
+            background-color: #28a745;
+            color: white;
+        }
+        
+        .check-out {
+            background-color: gray;
+            color: white;
+        }
+        
+        .message-box {
+            padding: 20px;
+            background-color: gray;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            border: 1px solid gray;
+            color: white;
+        }
+        
+        .message {
+            font-size: 18px;
+            color: white;
+        }
+        
+    </style>
+{% endblock %}
+
+{% block content %}
+{% include 'navbar.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/attendance.css' %}">
+    <title>Attendance</title>
+</head>
+<body>
+    <div class="attendance-container">
+        <h1>Welcome {{ user.first_name }} {{ user.last_name }}</h1><br>
+        {% if in_time %}
+            <p>You have Entered office at {{ in_time }}</p><br>
+        {% endif %}
+        {% if out_time %}
+            <p>You have Checked Out at {{ out_time }}</p><br>
+        {% endif %}
+        {% if message %}
+            <div class="message-box">
+                <p class="message">{{ message }}</p>
+            </div>
+        {% endif %}
+       
+        <div class="button-container">
+            {% if not in_time and not out_time %}
+            <form action="" method="post">
+                {% csrf_token %}
+                <button type="submit" name="check_in" class="btn check-in">Check In</button>
+            </form>
+            {% endif %}
+
+            {% if in_time and not out_time %}
+            <form action="" method="post">
+                {% csrf_token %}
+                <button type="submit" name="check_out" class="btn check-out">Check Out</button>
+            </form>
+            {% endif %}
+            
+        </div>
+    </div>
+</body>
+</html>
+
+{% endblock %}

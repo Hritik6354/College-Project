@@ -1,0 +1,81 @@
+{% extends "master.html" %}
+
+
+{% load static %}
+{% block title %}
+   Show Graph
+{% endblock %}
+
+{% block extra_css %}
+    <!-- <link rel="stylesheet" href="{% static 'css/view_employee.css' %}"> -->
+    <style>
+         .main1{
+            margin-top: 90px;
+            margin-left: 20%;
+        }
+
+        h2{
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        form{
+            margin-left: 30%;
+        }
+       
+        .message-box {
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+            width: 100%;
+            text-align: center;
+        }
+        .success-message {
+            color: green;
+            background-color: #e6ffe6;
+            border: 1px solid green;
+        }
+        .warning-message {
+            color: red;
+            background-color: #ffe6e6;
+            border: 1px solid red;
+        }
+
+     
+    </style>
+{% endblock %}
+
+{% block content %}
+{% include 'navbar.html' %}
+<div class="main1">
+    <h2>Attendance Analysis Graph</h2>
+    <form method="POST">
+        {% csrf_token %}
+
+            <label for="from_date">From:</label>
+            <input type="date" name="from_date" id="from_date">
+  
+            <label for="to_date">To:</label>
+            <input type="date" name="to_date" id="to_date">
+        <button type="submit">Generate Graph</button>
+    </form>
+    
+    <!-- Display the Plotly graph -->
+   
+
+    {% if show_warning_message %}
+        <div class="message-container">
+            <!-- {% for message in messages %} -->
+            <p style="color: red;">The date range exceeds one year. Showing only data from the past year.</p> }}
+                <!-- </div> -->
+            <!-- {% endfor %} -->
+        </div>
+{% endif %}   
+
+<div>
+    {{ graph_html|safe }}
+</div>
+    
+</div>
+
+{% endblock %}

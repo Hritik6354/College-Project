@@ -1,0 +1,63 @@
+{% extends "master.html" %}
+
+
+{% load static %}
+{% block title %}
+   Track Leave
+{% endblock %}
+
+{% block extra_css %}
+    {% comment %} <link rel="stylesheet" href="{% static 'css/attendance_request.css' %}"> {% endcomment %}
+    
+    <link rel="stylesheet" href="{% static 'css/view.css' %}">
+    <link rel="stylesheet" href="{% static 'css/datatables.min.css' %}">
+   
+{% endblock %}
+
+{% block content %}
+{% include 'navbar.html' %}
+<div class="main">
+    
+        <table class="table-sm-custom table-striped table-bordered" id="myTable" >
+            <thead>
+                <tr>
+                    <th>Employee</th>
+                    <th>Leave Type</th>
+                    <th>From</th>
+                    <th>To</th>
+                    <th>Number of Days</th>
+                    <th>Status</th>
+                    <th>Description</th>
+                    <th>Cnacle ?</th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                {% if leave_records %}
+                    {% for leave in leave_records %}
+                    <tr>
+                        <td>{{ leave.emp_id.user.username }}</td>
+                        <td>{{ leave.leavetype_id }}</td>
+                        <td>{{ leave.fro }}</td>
+                        <td>{{ leave.to }}</td>
+                        <td>{{ leave.num_of_days }}</td>
+                        <td>{{ leave.status }}</td>
+                        <td>{{ leave.description }}</td>
+                        <td>
+                            {% if leave.status == 'pending' %}
+                                <a href="{% url 'cancel_Leave' id=leave.id %}" id=btn class="btn">
+                                   Cnacle
+                                </a>
+                            {% endif %}
+                        </td>
+                        
+                        <!-- Add more columns as needed -->
+                    </tr>
+                    {% endfor %}
+                {% endif %}
+            </tbody>
+          
+        </table>
+    </div>
+</div>
+{% endblock %}

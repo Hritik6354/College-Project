@@ -1,0 +1,153 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+
+
+span{
+    color: red;
+}
+
+.wrapper {
+    justify-content: center;
+    position: relative;
+    height: auto;
+    width: 550px; /* Increased width for more padding space */
+    border-radius: 20px;
+    padding: 50px;  /* Increased padding */
+    background: #1a1a1a;
+    margin-top: 140px;
+}
+
+.wrapper:hover{
+    box-shadow: 0 0 30px rgba(0, 238, 255, 0.632);
+}
+
+.form-wrapper {
+
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+h2 {
+    font-size: 30px;
+    color: #fff;
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.input-group {
+    position: relative;
+    margin: 20px 0;
+    width: 100%;
+    padding-bottom: 20px ;
+}
+
+.input-group label {
+    position: absolute;
+    top: -20px; /* Position above the input */
+    left: 10px;
+    font-size: 16px;
+    color: #bbb;
+    background-color: #1a1a1a; /* Match label background with form background */
+    padding: 0 5px;
+    transition: 0.3s;
+}
+
+.input-group input,
+.input-group select,
+.input-group textarea {
+    width: 100%;
+    height: 45px; /* Increased height for better padding */
+    font-size: 16px;
+    color: #fff;
+    padding: 10px 10px;
+    background: #333;
+    border: 1px solid #555;
+    border-radius: 5px;
+    outline: none;
+    transition: 0.3s;
+}
+
+.input-group textarea{
+    overflow: hidden;
+    height: 120px;
+    resize: none;
+}
+
+.input-group input:focus,
+.input-group select:focus,
+.input-group textarea:focus {
+    border-color: #0ef;
+}
+
+.input-group input:focus~label,
+.input-group input:not(:placeholder-shown)~label,
+.input-group select:focus~label,
+.input-group select:not(:placeholder-shown)~label,
+.input-group textarea:focus~label,
+.input-group textarea:not(:placeholder-shown)~label {
+    top: -30px;
+    left: 10px;
+    font-size: 14px;
+    color: #0ef;
+}
+
+.input-group select {
+    appearance: none; /* Remove default select arrow styling */
+    background: #333 url('data:image/svg+xml;base64,...') no-repeat right 10px center; /* Custom arrow (add your SVG) */
+    background-size: 12px;
+}
+
+button {
+    width: 100%;
+    height: 45px; /* Increased height */
+    background: #0ef;
+    box-shadow: 0 0 10px #0ef;
+    font-size: 16px;
+    color: #000;
+    font-weight: 500;
+    cursor: pointer;
+    border-radius: 30px;
+    border: none;
+    outline: none;
+    margin-top: 20px;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #fff;
+    color: #000;
+    box-shadow: 0 0 20px #fff;
+}
+
+.signup-link {
+    font-size: 14px;
+    text-align: center;
+    margin: 15px 0;
+}
+
+.signup-link p {
+    color: #fff;
+}
+
+.signup-link p a {
+    color: #0ef;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.signup-link p a:hover {
+    text-decoration: underline;
+}
+
+/* Add required asterisk (*) */
+input[required]~label::after,
+select[required]~label::after,
+textarea[required]~label::after {
+    content: " *";
+    color: #ff4d4d;
+    margin-left: 2px;
+}
+
